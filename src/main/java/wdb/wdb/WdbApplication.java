@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"controller"})
+@ComponentScan(basePackages = {"api"})
 public class WdbApplication {
 
 	public static void main(String[] args) {
