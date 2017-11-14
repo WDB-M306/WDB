@@ -1,4 +1,4 @@
 package persistence;
 
-public class Tag extends DataObject {
+public class Tag {
 }

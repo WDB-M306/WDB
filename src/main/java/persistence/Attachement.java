@@ -1,5 +1,5 @@
 package persistence;
 
 
-public class Attachement extends DataObject {
+public class Attachement {
 }
