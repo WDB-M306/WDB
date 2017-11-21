@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
 @RestController
@@ -38,9 +37,30 @@ public class PageController extends Controller{
         return String.format("Add tag with id %d to page with id %s", tagId, pageId);
     }
     
-    @RequestMapping(method = POST, value = "/{pageId}/attachement")
-    String addTagToPage(@PathVariable String pageId, @RequestBody Attachement attachement) {
-        return String.format("Add attachement to page with id %s, %s", pageId, attachement.toString());
+    @RequestMapping(method = POST, value = "/{pageId}/attachment")
+    String addAttToPage(@PathVariable String pageId, @RequestBody Attachment attachment) {
+        return String.format("Add attachment to page with id %s, %s", pageId, attachment.toString());
+    }
+    
+    @RequestMapping(method = PUT, value = "/{pageId}")
+    String putPage(@PathVariable String pageId, @RequestBody Page newPage) {
+        return String.format("Changed page with id %s to title %s", pageId, newPage.title);
+    }
+    
+    @RequestMapping(method = DELETE, value = "/{pageId}")
+    String deletePage(@PathVariable String pageId)
+    {
+        return "Del";
+    }
+    
+    @RequestMapping(method = DELETE, value = "/{pageId}/tag")
+    String removeTagFromPage(@PathVariable String pageId, @RequestBody long tagId) {
+        return String.format("Remove tag with id %d to page with id %s", tagId, pageId);
+    }
+    
+    @RequestMapping(method = DELETE, value = "/{pageId}/attachment")
+    String removeAttFromPage(@PathVariable String pageId, @RequestBody long attachmentId) {
+        return String.format("Remove attachment to page with id %s, %d", pageId, attachmentId);
     }
 }
 
@@ -49,10 +69,13 @@ class Page {
     
     public String title;
     public String content;
+    public long authorId;
+    public long[] tagIds;
 }
 
 @Entity
-class Attachement {
+class Attachment
+{
     
     public String filename;
     public String content;
