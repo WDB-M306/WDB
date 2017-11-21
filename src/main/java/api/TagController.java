@@ -49,9 +49,9 @@ public class TagController extends Controller
     // UPDATE
     
     @RequestMapping(method = PUT, value = "/{tagId}")
-    String putTag (@PathVariable String tagId, @RequestBody Tag newtag)
+    String putTag (@PathVariable String tagId, @RequestBody Tag newTag)
     {
-        return String.format("Changed tag with id %s to label %s", tagId, newtag.label);
+        return String.format("Changed tag with id %s to label %s", tagId, newTag.label);
     }
     
     // DELETE
