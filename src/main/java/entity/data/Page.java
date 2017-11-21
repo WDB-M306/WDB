@@ -1,4 +1,4 @@
-package persistence;
+package entity.data;
 
 import javax.persistence.*;
 
@@ -55,5 +55,4 @@ public class Page {
     public void setAuthorId(long authorId) {
         this.authorId = authorId;
     }
-
 }
