@@ -1,22 +1,21 @@
 package entity.domain;
 
+import javax.persistence.*;
 import java.util.Date;
 
-public class AttachmentEntity {
-
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "User.findAttachmentById", query = "SELECT a FROM Attachment AS a WHERE a.id = ?1"),
+        @NamedQuery(name= "User.findAttachmentByDate", query = "SELECT a FROM Attachment AS a WHERE a.date = ?1")
+})
+public class Attachment
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String fileName;
     private long size;
     private Date date;
-
-    public AttachmentEntity(String fileName) {
-        this.fileName = fileName;
-    }
-    public AttachmentEntity(String fileName, long size, Date date) {
-        this.fileName = fileName;
-        this.size = size;
-        this.date = date;
-    }
 
     public long getId() {
         return id;
@@ -43,3 +42,4 @@ public class AttachmentEntity {
         this.date = date;
     }
 }
+

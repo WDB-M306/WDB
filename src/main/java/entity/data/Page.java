@@ -1,58 +1,82 @@
 package entity.data;
 
-import javax.persistence.*;
-
-@Entity
-@NamedQueries({
-        @NamedQuery(name = "Page.findPageById", query = "SELECT p FROM Page AS p WHERE p.id = ?1"),
-        @NamedQuery(name= "Page.findPageByTitle", query = "SELECT p FROM Page AS p WHERE p.title = ?1"),
-        @NamedQuery(name= "Page.findPageByTags", query = "SELECT p FROM Page AS p WHERE p.tags = ?1"),
-        @NamedQuery(name = "Page.findAllPageByAuthorId", query ="SELECT p FROM Page AS p WHERE p.authorId = ?1")
-})
-public class Page {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String title;
-    private String contentLink;
-    private String tags;
-    private String attatchementLink;
-    private long authorId;
-
-    public long getId() {
+public class Page
+{
+    private long       id;
+    private String     title;
+    private String     content;
+    private Tag[]      tags;
+    private Attachment attachment;
+    private User       author;
+    
+    public Page() {}
+    
+    public Page (String title, String content, Tag[] tags, Attachment attachment, User author)
+    {
+        this.title = title;
+        this.content = content;
+        this.tags = tags;
+        this.attachment = attachment;
+        this.author = author;
+    }
+    
+    public long getId ()
+    {
         return id;
     }
-    public void setId(long id) {
+    
+    public void setId (long id)
+    {
         this.id = id;
     }
-    public String getTitle() {
+    
+    public String getTitle ()
+    {
         return title;
     }
-    public void setTitle(String title) {
+    
+    public void setTitle (String title)
+    {
         this.title = title;
     }
-    public String getContentLink() {
-        return contentLink;
+    
+    public String getContent ()
+    {
+        return content;
     }
-    public void setContentLink(String contentLink) {
-        this.contentLink = contentLink;
+    
+    public void setContent (String content)
+    {
+        this.content = content;
     }
-    public String getTags() {
+    
+    public Tag[] getTags ()
+    {
         return tags;
     }
-    public void setTags(String tags) {
+    
+    public void setTags (Tag[] tags)
+    {
         this.tags = tags;
     }
-    public String getAttatchementLink() {
-        return attatchementLink;
+    
+    public Attachment getAttachment ()
+    {
+        return attachment;
     }
-    public void setAttatchementLink(String attatchementLink) {
-        this.attatchementLink = attatchementLink;
+    
+    public void setAttachment (Attachment attachment)
+    {
+        this.attachment = attachment;
     }
-    public long getAuthorId() {
-        return authorId;
+    
+    public User getAuthorId ()
+    {
+        return author;
     }
-    public void setAuthorId(long authorId) {
-        this.authorId = authorId;
+    
+    public void setAuthorId (User author)
+    {
+        this.author = author;
     }
 }

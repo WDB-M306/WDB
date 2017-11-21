@@ -1,21 +1,23 @@
 package entity.domain;
 
-public class PageEntity {
+import javax.persistence.*;
 
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "Page.findPageById", query = "SELECT p FROM Page AS p WHERE p.id = ?1"),
+        @NamedQuery(name= "Page.findPageByTitle", query = "SELECT p FROM Page AS p WHERE p.title = ?1"),
+        @NamedQuery(name= "Page.findPageByTags", query = "SELECT p FROM Page AS p WHERE p.tags = ?1"),
+        @NamedQuery(name = "Page.findAllPageByAuthorId", query ="SELECT p FROM Page AS p WHERE p.authorId = ?1")
+})
+public class Page {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String title;
     private String contentLink;
     private String tags;
     private String attatchementLink;
     private long authorId;
-
-    public PageEntity(String title, String contentLink, String tags, String attatchementLink, long authorId) {
-        this.title = title;
-        this.contentLink = contentLink;
-        this.tags = tags;
-        this.attatchementLink = attatchementLink;
-        this.authorId = authorId;
-    }
 
     public long getId() {
         return id;
