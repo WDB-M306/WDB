@@ -1,4 +1,4 @@
-package persistence;
+package entity.data;
 
 import javax.persistence.*;
 

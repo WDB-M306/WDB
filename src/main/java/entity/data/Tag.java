@@ -1,4 +1,4 @@
-package persistence;
+package entity.data;
 
 import javax.persistence.*;
 
@@ -11,8 +11,8 @@ public class Tag {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
-    private string name
-    private string entries
+    private String name;
+    private String entries;
 
     public long getId() {
         return id;
@@ -20,16 +20,16 @@ public class Tag {
     public void setId(long id) {
         this.id = id;
     }
-    public string getName() {
+    public String getName() {
         return name;
     }
-    public void setName(string name) {
+    public void setName(String name) {
         this.name = name;
     }
-    public string getEntries() {
+    public String getEntries() {
         return entries;
     }
-    public void setEntries(string entries) {
+    public void setEntries(String entries) {
         this.entries = entries;
     }
 }
