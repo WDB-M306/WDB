@@ -11,9 +11,9 @@ use wdb;
 CREATE TABLE `Page` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255),
-  `contentLink` varchar(255),
+  `content` varchar(255),
   `tags` int(11),
-  `attatchementLink` varchar(255),
+  `attachment` varchar(255),
   `authorId` int(11)
 );
 
@@ -25,7 +25,7 @@ CREATE TABLE `Page` (
 
 CREATE TABLE `Tag` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255),
+  `label` varchar(255),
   `entries` varchar(255)
 );
 
@@ -39,7 +39,7 @@ CREATE TABLE `User` (
   `id` int(11) NOT NULL  PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) UNIQUE,
   `password` varchar(255),
-  `deactivated` tinyint(1)
+  `active` tinyint(1)
 );
 
 --
