@@ -1,8 +1,9 @@
 package api;
 
+import entity.data.Tag;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 import javax.persistence.EntityManager;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -19,11 +20,9 @@ public class TagController extends Controller
     }
     
     @RequestMapping(method = GET)
-    String tags ()
+    Tag[] getTags ()
     {
-        // return all tags
-        
-        return "Hello im a Tag";
+        return null;
     }
     
     @RequestMapping(method = GET, value = "/{tagId}")
@@ -43,7 +42,7 @@ public class TagController extends Controller
     @RequestMapping(method = POST)
     String postTag (@RequestBody Tag tag)
     {
-        return "Created tag «" + tag.label + "»";
+        return "Created tag «" + tag.getLabel() + "»";
     }
     
     // UPDATE
@@ -51,7 +50,7 @@ public class TagController extends Controller
     @RequestMapping(method = PUT, value = "/{tagId}")
     String putTag (@PathVariable String tagId, @RequestBody Tag newTag)
     {
-        return String.format("Changed tag with id %s to label %s", tagId, newTag.label);
+        return String.format("Changed tag with id %s to label %s", tagId, newTag.getLabel());
     }
     
     // DELETE
@@ -61,11 +60,9 @@ public class TagController extends Controller
     {
         return "Del";
     }
-}
-
-@Entity
-class Tag
-{
-    public long   id;
-    public String label;
+    
+    private static entity.domain.Tag domainFromData(Tag tag)
+    {
+        return new entity.domain.Tag(tag.getLabel());
+    }
 }
