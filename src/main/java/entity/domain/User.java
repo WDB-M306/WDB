@@ -6,7 +6,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "User.findUserById", query = "SELECT u FROM User AS u WHERE u.id = ?1"),
         @NamedQuery(name= "User.findUserByUsername", query = "SELECT u FROM User AS u WHERE u.username = ?1"),
-        @NamedQuery(name = "User.findAllUserByDeactivated", query ="SELECT u FROM User AS u WHERE u.deactivated = ?1")
+        @NamedQuery(name = "User.findAllUserByActive", query ="SELECT u FROM User AS u WHERE u.active = ?1")
 })
 public class User {
     @Id
@@ -15,7 +15,7 @@ public class User {
     @Column(unique = true)
     private String username;
     private String password;
-    private boolean deactivated;
+    private boolean active;
 
     public long getId() {
         return id;
@@ -35,10 +35,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public boolean isDeactivated() {
-        return deactivated;
+    public boolean isActive() {
+        return active;
     }
-    public void setDeactivated(boolean deactivated) {
-        this.deactivated = deactivated;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
