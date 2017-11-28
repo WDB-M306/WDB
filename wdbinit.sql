@@ -12,7 +12,7 @@ CREATE TABLE `Page` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255),
   `content` varchar(255),
-  `tags` int(11),
+  `dataTags` int(11),
   `attachment` varchar(255),
   `authorId` int(11)
 );
@@ -20,7 +20,7 @@ CREATE TABLE `Page` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Tag`
+-- Tabellenstruktur für Tabelle `DataTag`
 --
 
 CREATE TABLE `Tag` (
@@ -50,7 +50,7 @@ CREATE TABLE `User` (
 -- Indizes für die Tabelle `Page`
 --
 ALTER TABLE `Page`
-  ADD KEY `fk_tags` (`tags`),
+  ADD KEY `fk_tags` (`dataTags`),
   ADD KEY `fk_user` (`authorId`);
 
 
@@ -62,6 +62,6 @@ ALTER TABLE `Page`
 -- Constraints der Tabelle `Page`
 --
 ALTER TABLE `Page`
-  ADD CONSTRAINT `fk_tags` FOREIGN KEY (`tags`) REFERENCES `Tag` (`id`),
+  ADD CONSTRAINT `fk_tags` FOREIGN KEY (`dataTags`) REFERENCES `Tag` (`id`),
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`authorId`) REFERENCES `User` (`id`);
 COMMIT;

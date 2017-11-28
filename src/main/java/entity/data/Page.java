@@ -5,17 +5,17 @@ public class Page
     private long       id;
     private String     title;
     private String     content;
-    private Tag[]      tags;
+    private DataTag[]  dataTags;
     private Attachment attachment;
     private User       author;
     
     public Page() {}
     
-    public Page (String title, String content, Tag[] tags, Attachment attachment, User author)
+    public Page (String title, String content, DataTag[] dataTags, Attachment attachment, User author)
     {
         this.title = title;
         this.content = content;
-        this.tags = tags;
+        this.dataTags = dataTags;
         this.attachment = attachment;
         this.author = author;
     }
@@ -50,14 +50,14 @@ public class Page
         this.content = content;
     }
     
-    public Tag[] getTags ()
+    public DataTag[] getDataTags ()
     {
-        return tags;
+        return dataTags;
     }
     
-    public void setTags (Tag[] tags)
+    public void setDataTags (DataTag[] dataTags)
     {
-        this.tags = tags;
+        this.dataTags = dataTags;
     }
     
     public Attachment getAttachment ()

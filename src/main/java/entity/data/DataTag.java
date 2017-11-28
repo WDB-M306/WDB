@@ -1,11 +1,11 @@
 package entity.data;
 
-public class Tag
+public class DataTag
 {
     private long   id;
     private String label;
     
-    public Tag (String label)
+    public DataTag (String label)
     {
         this.label = label;
     }

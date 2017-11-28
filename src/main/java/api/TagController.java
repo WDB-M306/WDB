@@ -1,12 +1,13 @@
 package api;
 
-import entity.data.Tag;
+import entity.data.DataTag;
+import entity.domain.Tag;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Embeddable;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
-import java.lang.reflect.Array;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -22,15 +23,20 @@ public class TagController extends Controller
     }
     
     @RequestMapping(method = GET)
-    Tag[] getTags ()
+    DataTag[] getTags ()
     {
-        entity.domain.Tag[] tags = em.createNamedQuery("Tag.selectAll", entity.domain.Tag.class).getResultList().toArray(new entity.domain.Tag[0]);
-        Tag[] dataTags = new Tag[tags.length];
-        for (int i = 0; i < tags.length; i++)
+        Query query = em.createNamedQuery("Tag.findAll", entity.domain.Tag.class);
+        
+        if (query.getMaxResults() == 0)
+            return new DataTag[0];
+        
+        List<Tag> tags = query.getResultList();
+        DataTag[]           dataDataTags = new DataTag[tags.size()];
+        for (int i = 0; i < tags.size(); i++)
         {
-            dataTags[i] = dataFromDomain(tags[i]);
+            dataDataTags[i] = dataFromDomain(tags.get(i));
         }
-        return dataTags;
+        return dataDataTags;
     }
     
     @RequestMapping(method = GET, value = "/{tagId}")
@@ -48,7 +54,7 @@ public class TagController extends Controller
     // CREATE
     
     @RequestMapping(method = POST)
-    String postTag (@RequestBody Tag tag)
+    String postTag (@RequestBody DataTag tag)
     {
         return "Created tag «" + tag.getLabel() + "»";
     }
@@ -56,7 +62,7 @@ public class TagController extends Controller
     // UPDATE
     
     @RequestMapping(method = PUT, value = "/{tagId}")
-    String putTag (@PathVariable String tagId, @RequestBody Tag newTag)
+    String putTag (@PathVariable String tagId, @RequestBody DataTag newTag)
     {
         return String.format("Changed tag with id %s to label %s", tagId, newTag.getLabel());
     }
@@ -69,16 +75,16 @@ public class TagController extends Controller
         return "Del";
     }
     
-    private static entity.domain.Tag domainFromData(Tag tag)
+    private static entity.domain.Tag domainFromData(DataTag dataTag)
     {
-        return new entity.domain.Tag(tag.getLabel());
+        return new entity.domain.Tag(dataTag.getLabel());
     }
     
-    private static Tag dataFromDomain(entity.domain.Tag tag)
+    private static DataTag dataFromDomain(entity.domain.Tag tag)
     
     {
-        Tag tag1 = new Tag(tag.getName());
+        DataTag dataTag1 = new DataTag(tag.getName());
         tag.setId(tag.getId());
-        return tag1;
+        return dataTag1;
     }
 }
