@@ -6,17 +6,27 @@ import javax.persistence.*;
 
 @Entity
 @Table
-@NamedQueries({@NamedQuery(name = "Tag.findTagById",
-        query = "SELECT t FROM Tag AS t WHERE t.id = ?1"), @NamedQuery(name = "Tag.findTagByName",
-        query = "SELECT t FROM Tag AS t WHERE t.name = ?1")})
-@NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag AS t")
+@NamedQueries({
+    @NamedQuery(
+            name = "Tag.findTagById",
+            query = "SELECT t FROM Tag AS t WHERE t.id = ?1"),
+    @NamedQuery(
+            name = "Tag.findTagByName",
+            query = "SELECT t FROM Tag AS t WHERE t.name = ?1"),
+    @NamedQuery(
+            name = "Tag.findAll",
+            query = "SELECT t FROM Tag AS t")
+})
+
 public class Tag
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long   id;
     private String name;
-    private String entries;
+    //private String entries;
+    
+    public Tag(){}
     
     public Tag (String name)
     {
@@ -43,13 +53,13 @@ public class Tag
         this.name = name;
     }
     
-    public String getEntries ()
+    /*public String getEntries ()
     {
         return entries;
-    }
+    }*/
     
-    public void setEntries (String entries)
+    /*public void setEntries (String entries)
     {
         this.entries = entries;
-    }
+    }*/
 }

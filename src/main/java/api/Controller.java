@@ -1,13 +1,15 @@
 package api;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 
 @Component
 public class Controller {
-
+    
+    @PersistenceContext
     protected EntityManager em;
 
     public Controller(EntityManager em) {

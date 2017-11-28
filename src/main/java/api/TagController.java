@@ -2,11 +2,14 @@ package api;
 
 import entity.data.DataTag;
 import entity.domain.Tag;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -22,16 +25,28 @@ public class TagController extends Controller
         super(em);
     }
     
+    private static entity.domain.Tag domainFromData (DataTag dataTag)
+    {
+        return new entity.domain.Tag(dataTag.getLabel());
+    }
+    
+    private static DataTag dataFromDomain (entity.domain.Tag tag)
+    
+    {
+        DataTag dataTag1 = new DataTag(tag.getName());
+        dataTag1.setId(tag.getId());
+        return dataTag1;
+    }
+    
     @RequestMapping(method = GET)
     DataTag[] getTags ()
     {
         Query query = em.createNamedQuery("Tag.findAll", entity.domain.Tag.class);
         
-        if (query.getMaxResults() == 0)
-            return new DataTag[0];
+        if (query.getMaxResults() == 0) return new DataTag[0];
         
-        List<Tag> tags = query.getResultList();
-        DataTag[]           dataDataTags = new DataTag[tags.size()];
+        List<Tag> tags         = query.getResultList();
+        DataTag[] dataDataTags = new DataTag[tags.size()];
         for (int i = 0; i < tags.size(); i++)
         {
             dataDataTags[i] = dataFromDomain(tags.get(i));
@@ -40,10 +55,17 @@ public class TagController extends Controller
     }
     
     @RequestMapping(method = GET, value = "/{tagId}")
-    String getTag (@PathVariable String tagId)
+    DataTag getTag (@PathVariable long tagId)
     {
-        return "Id: " + tagId;
+        Query query = em.createNamedQuery("Tag.findTagById", Tag.class);
+        query.setParameter(1, tagId);
+        Tag tag = (Tag) query.getSingleResult();
+        return dataFromDomain(tag);
     }
+    
+    // CREATE
+    
+    // UPDATE
     
     @RequestMapping(method = GET, value = "/{tagId}/page")
     String getPagesFromTag (@PathVariable String tagId)
@@ -51,40 +73,33 @@ public class TagController extends Controller
         return "Id: " + tagId;
     }
     
-    // CREATE
+    // DELETE
     
     @RequestMapping(method = POST)
-    String postTag (@RequestBody DataTag tag)
+    @Transactional
+    public void postTag (@RequestBody String label)
     {
-        return "Created tag «" + tag.getLabel() + "»";
+        Tag tag = new Tag(label);
+        em.persist(tag);
     }
     
-    // UPDATE
     
     @RequestMapping(method = PUT, value = "/{tagId}")
-    String putTag (@PathVariable String tagId, @RequestBody DataTag newTag)
+    @Transactional
+    public void putTag (@PathVariable long tagId, @RequestBody String label)
     {
-        return String.format("Changed tag with id %s to label %s", tagId, newTag.getLabel());
-    }
+        Tag tag = em.find(Tag.class, tagId);
+        
+        tag.setName(label);
     
-    // DELETE
+        System.out.println("Changed tag "+ tag.getId() + " to " + label);
+        
+        em.merge(tag);
+    }
     
     @RequestMapping(method = DELETE, value = "/{tagId}")
     String deleteTag (@PathVariable String tagId)
     {
         return "Del";
-    }
-    
-    private static entity.domain.Tag domainFromData(DataTag dataTag)
-    {
-        return new entity.domain.Tag(dataTag.getLabel());
-    }
-    
-    private static DataTag dataFromDomain(entity.domain.Tag tag)
-    
-    {
-        DataTag dataTag1 = new DataTag(tag.getName());
-        tag.setId(tag.getId());
-        return dataTag1;
     }
 }
