@@ -19,29 +19,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping("/tag")
 public class TagController extends Controller
 {
-    
     public TagController (EntityManager em)
     {
         super(em);
     }
     
-    private static entity.domain.Tag domainFromData (DataTag dataTag)
-    {
-        return new entity.domain.Tag(dataTag.getLabel());
-    }
-    
-    private static DataTag dataFromDomain (entity.domain.Tag tag)
-    
-    {
-        DataTag dataTag1 = new DataTag(tag.getName());
-        dataTag1.setId(tag.getId());
-        return dataTag1;
-    }
-    
     @RequestMapping(method = GET)
     DataTag[] getTags ()
     {
-        Query query = em.createNamedQuery("Tag.findAll", entity.domain.Tag.class);
+        Query query = em.createNamedQuery("Tag.findAll", Tag.class);
         
         if (query.getMaxResults() == 0) return new DataTag[0];
         
@@ -54,6 +40,13 @@ public class TagController extends Controller
         return dataDataTags;
     }
     
+    private static DataTag dataFromDomain (Tag tag)
+    {
+        DataTag dataTag = new DataTag(tag.getName());
+        dataTag.setId(tag.getId());
+        return dataTag;
+    }
+    
     @RequestMapping(method = GET, value = "/{tagId}")
     DataTag getTag (@PathVariable long tagId)
     {
@@ -63,43 +56,34 @@ public class TagController extends Controller
         return dataFromDomain(tag);
     }
     
-    // CREATE
-    
-    // UPDATE
-    
     @RequestMapping(method = GET, value = "/{tagId}/page")
     String getPagesFromTag (@PathVariable String tagId)
     {
         return "Id: " + tagId;
     }
     
-    // DELETE
-    
     @RequestMapping(method = POST)
     @Transactional
-    public void postTag (@RequestBody String label)
+    public void createTag (@RequestBody String label)
     {
         Tag tag = new Tag(label);
         em.persist(tag);
     }
     
-    
     @RequestMapping(method = PUT, value = "/{tagId}")
     @Transactional
-    public void putTag (@PathVariable long tagId, @RequestBody String label)
+    public void updateTag (@PathVariable long tagId, @RequestBody String label)
     {
         Tag tag = em.find(Tag.class, tagId);
-        
         tag.setName(label);
-    
-        System.out.println("Changed tag "+ tag.getId() + " to " + label);
-        
         em.merge(tag);
     }
     
     @RequestMapping(method = DELETE, value = "/{tagId}")
-    String deleteTag (@PathVariable String tagId)
+    @Transactional
+    public void deleteTag (@PathVariable long tagId)
     {
-        return "Del";
+        Tag tag = em.find(Tag.class, tagId);
+        em.remove(tag);
     }
 }
