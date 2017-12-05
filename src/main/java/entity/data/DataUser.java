@@ -1,18 +1,25 @@
 package entity.data;
 
-public class User
+public class DataUser
 {
     private long    id;
     private String  username;
     private boolean active;
     private long[]  pageIds;
     
-    public User (String username)
+    public DataUser (String username)
     {
         this.username = username;
     }
     
-    public User (String username, boolean active)
+    public DataUser (long id, String username, boolean active)
+    {
+        this.id = id;
+        this.username = username;
+        this.active = active;
+    }
+    
+    public DataUser (String username, boolean active)
     {
         this.username = username;
         this.active = active;

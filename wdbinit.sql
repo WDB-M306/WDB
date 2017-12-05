@@ -5,7 +5,7 @@ use wdb;
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Page`
+-- Tabellenstruktur für Tabelle `DataPage`
 --
 
 CREATE TABLE `Page` (
@@ -47,7 +47,7 @@ CREATE TABLE `User` (
 --
 
 --
--- Indizes für die Tabelle `Page`
+-- Indizes für die Tabelle `DataPage`
 --
 ALTER TABLE `Page`
   ADD KEY `fk_tags` (`dataTags`),
@@ -59,7 +59,7 @@ ALTER TABLE `Page`
 --
 
 --
--- Constraints der Tabelle `Page`
+-- Constraints der Tabelle `DataPage`
 --
 ALTER TABLE `Page`
   ADD CONSTRAINT `fk_tags` FOREIGN KEY (`dataTags`) REFERENCES `Tag` (`id`),

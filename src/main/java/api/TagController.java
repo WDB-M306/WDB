@@ -40,7 +40,7 @@ public class TagController extends Controller
         return dataDataTags;
     }
     
-    private static DataTag dataFromDomain (Tag tag)
+    public static DataTag dataFromDomain (Tag tag)
     {
         DataTag dataTag = new DataTag(tag.getName());
         dataTag.setId(tag.getId());

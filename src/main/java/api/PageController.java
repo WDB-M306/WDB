@@ -1,7 +1,10 @@
 package api;
 
+import entity.data.DataPage;
+import entity.data.DataTag;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 
@@ -12,14 +15,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping("/page")
 public class PageController extends Controller{
     
+    
     public PageController (EntityManager em) {
         super(em);
     }
     
+    
     @RequestMapping(method = GET)
     String pages() {
         // return all pages
-        return "Hello im a Page";
+        return "Hello im a DataPage";
     }
     
     @RequestMapping(method = GET, value = "/{pageId}")
