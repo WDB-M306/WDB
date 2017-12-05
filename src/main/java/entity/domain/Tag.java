@@ -5,11 +5,10 @@ import javax.persistence.*;
 
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "Tag.findTagById", query = "SELECT t FROM Tag AS t WHERE t.id = ?1"),
-        @NamedQuery(name = "Tag.findTagByName", query = "SELECT t FROM Tag AS t WHERE t.name = ?1"),
-        @NamedQuery(name = "Tag.selectAll", query = "SELECT t FROM TAG AS t")
-})
+@NamedQueries({@NamedQuery(name = "Tag.findTagById",
+        query = "SELECT t FROM Tag AS t WHERE t.id = ?1"), @NamedQuery(name = "Tag.findTagByName",
+        query = "SELECT t FROM Tag AS t WHERE t.name = ?1"), @NamedQuery(name = "Tag.selectAll",
+        query = "SELECT t FROM TAG AS t")})
 public class Tag
 {
     @Id
@@ -18,7 +17,7 @@ public class Tag
     private String name;
     //private String entries;
     
-    public Tag(){}
+    public Tag () {}
     
     public Tag (String name)
     {
@@ -44,14 +43,4 @@ public class Tag
     {
         this.name = name;
     }
-    
-    /*public String getEntries ()
-    {
-        return entries;
-    }*/
-    
-    /*public void setEntries (String entries)
-    {
-        this.entries = entries;
-    }*/
 }

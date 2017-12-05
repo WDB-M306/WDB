@@ -1,20 +1,21 @@
 package connection;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class Connector {
 
+public class Connector
+{
     EntityManagerFactory entityManagerFactory = null;
-
-    public Connector(String persistenceUnit) {
+    
+    public Connector (String persistenceUnit)
+    {
         entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
     }
-
-    public EntityManager getEntityManagerInstance() {
+    
+    public EntityManager getEntityManagerInstance ()
+    {
         return entityManagerFactory.createEntityManager();
     }
 }
