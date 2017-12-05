@@ -1,6 +1,7 @@
 package entity.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NamedQueries({
@@ -14,11 +15,13 @@ public class Page {
     private long         id;
     private String       title;
     private String       content;
-    private Tag[]        tags;
-    private Attachment[] attachments;
+    @OneToMany(targetEntity = Tag.class)
+    private List<Tag> tags;
+    @OneToMany(targetEntity = Attachment.class)
+    private List<Attachment> attachments;
     private long         authorId;
     
-    private Page ()
+    public Page ()
     {
     }
     
@@ -40,18 +43,23 @@ public class Page {
     public void setContent (String content) {
         this.content = content;
     }
-    public Tag[] getTags() {
+
+    public List<Tag> getTags() {
         return tags;
     }
-    public void setTags(Tag[] tags) {
+
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
-    public Attachment[] getAttachments () {
+
+    public List<Attachment> getAttachments() {
         return attachments;
     }
-    public void setAttachments (Attachment[] attachments) {
+
+    public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
     }
+
     public long getAuthorId() {
         return authorId;
     }

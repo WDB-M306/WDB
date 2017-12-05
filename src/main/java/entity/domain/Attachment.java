@@ -17,6 +17,9 @@ public class Attachment
     private long size;
     private Date date;
 
+    public Attachment() {
+    }
+
     public long getId() {
         return id;
     }
