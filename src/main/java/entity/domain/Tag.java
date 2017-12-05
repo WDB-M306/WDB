@@ -5,19 +5,11 @@ import javax.persistence.*;
 
 
 @Entity
-@Table
 @NamedQueries({
-    @NamedQuery(
-            name = "Tag.findTagById",
-            query = "SELECT t FROM Tag AS t WHERE t.id = ?1"),
-    @NamedQuery(
-            name = "Tag.findTagByName",
-            query = "SELECT t FROM Tag AS t WHERE t.name = ?1"),
-    @NamedQuery(
-            name = "Tag.findAll",
-            query = "SELECT t FROM Tag AS t")
+        @NamedQuery(name = "Tag.findTagById", query = "SELECT t FROM Tag AS t WHERE t.id = ?1"),
+        @NamedQuery(name = "Tag.findTagByName", query = "SELECT t FROM Tag AS t WHERE t.name = ?1"),
+        @NamedQuery(name = "Tag.selectAll", query = "SELECT t FROM TAG AS t")
 })
-
 public class Tag
 {
     @Id
