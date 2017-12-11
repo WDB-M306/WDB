@@ -1,7 +1,10 @@
 package api;
 
+import entity.data.DataPage;
 import entity.data.DataTag;
+import entity.domain.Page;
 import entity.domain.Tag;
+import org.hibernate.type.ListType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -57,9 +61,33 @@ public class TagController extends Controller
     }
     
     @RequestMapping(method = GET, value = "/{tagId}/page")
-    String getPagesFromTag (@PathVariable String tagId)
+    public DataPage[] getPagesFromTag (@PathVariable long tagId) throws Exception
     {
-        return "Id: " + tagId;
+        Tag tag = em.find(Tag.class, tagId);
+    
+        if (tag == null)
+        {
+            throw new Exception("Tag nicht gefunden");
+        }
+        
+        List<Page> pagesWithTag = new ArrayList<>();
+        
+        List<Page> pages = em.createNamedQuery("Page.findAll", Page.class).getResultList();
+        pages.forEach(page -> {
+            if (page.getTags().contains(tag))
+            {
+                pagesWithTag.add(page);
+            }
+        });
+        
+        DataPage[] dataPages = new DataPage[pagesWithTag.size()];
+    
+        for (int i = 0; i < pagesWithTag.size(); i++)
+        {
+            dataPages[i] = PageController.dataFromDomain(pagesWithTag.get(i));
+        }
+        
+        return dataPages;
     }
     
     @RequestMapping(method = POST)

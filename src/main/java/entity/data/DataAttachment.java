@@ -3,19 +3,19 @@ package entity.data;
 import java.util.Date;
 
 
-public class Attachment
+public class DataAttachment
 {
     private long   id;
     private String fileName;
     private long   size;
     private Date   date;
     
-    public Attachment (String fileName)
+    public DataAttachment (String fileName)
     {
         this.fileName = fileName;
     }
     
-    public Attachment (String fileName, long size, Date date)
+    public DataAttachment (String fileName, long size, Date date)
     {
         this.fileName = fileName;
         this.size = size;

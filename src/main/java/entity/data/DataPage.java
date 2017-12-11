@@ -2,21 +2,21 @@ package entity.data;
 
 public class DataPage
 {
-    private long         id;
-    private String       title;
-    private String       content;
-    private DataTag[]    dataTags;
-    private Attachment[] attachments;
-    private DataUser     author;
+    private long             id;
+    private String           title;
+    private String           content;
+    private DataTag[]        dataTags;
+    private DataAttachment[] dataAttachments;
+    private long         author;
     
     public DataPage () {}
     
-    public DataPage (String title, String content, DataTag[] dataTags, Attachment[] attachments, DataUser author)
+    public DataPage (String title, String content, DataTag[] dataTags, DataAttachment[] dataAttachments, long author)
     {
         this.title = title;
         this.content = content;
         this.dataTags = dataTags;
-        this.attachments = attachments;
+        this.dataAttachments = dataAttachments;
         this.author = author;
     }
     
@@ -60,22 +60,22 @@ public class DataPage
         this.dataTags = dataTags;
     }
     
-    public Attachment[] getAttachments ()
+    public DataAttachment[] getDataAttachments ()
     {
-        return attachments;
+        return dataAttachments;
     }
     
-    public void setAttachments (Attachment[] attachments)
+    public void setDataAttachments (DataAttachment[] dataAttachments)
     {
-        this.attachments = attachments;
+        this.dataAttachments = dataAttachments;
     }
     
-    public DataUser getAuthorId ()
+    public long getAuthor ()
     {
         return author;
     }
     
-    public void setAuthorId (DataUser author)
+    public void setAuthor (long author)
     {
         this.author = author;
     }

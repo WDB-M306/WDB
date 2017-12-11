@@ -5,8 +5,8 @@ import java.util.Date;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Attachement.findAttachmentById", query = "SELECT a FROM Attachment AS a WHERE a.id = ?1"),
-        @NamedQuery(name= "Attachement.findAttachmentByDate", query = "SELECT a FROM Attachment AS a WHERE a.date = ?1")
+        @NamedQuery(name = "Attachment.findAttachmentById", query = "SELECT a FROM Attachment AS a WHERE a.id = ?1"),
+        @NamedQuery(name= "Attachment.findAttachmentByDate", query = "SELECT a FROM Attachment AS a WHERE a.date = ?1")
 })
 public class Attachment
 {

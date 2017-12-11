@@ -1,6 +1,8 @@
 package api;
 
+import entity.data.DataPage;
 import entity.data.DataUser;
+import entity.domain.Page;
 import entity.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -58,6 +60,23 @@ public class UserController extends Controller
     public static DataUser dataFromDomain (User user)
     {
         return new DataUser(user.getId(), user.getUsername(), user.isActive());
+    }
+    
+    @RequestMapping(method = GET, value = "/{userId}/page")
+    public DataPage[] getPages(@PathVariable long userId)
+    {
+        User user = em.find(User.class, userId);
+    
+        Page[] pages = em.createNamedQuery("Page.findAllPageByAuthorId", Page.class).setParameter(1, userId).getResultList().toArray(new Page[0]);
+        
+        DataPage[] dataPages = new DataPage[pages.length];
+    
+        for (int i = 0; i < pages.length; i++)
+        {
+            dataPages[i] = PageController.dataFromDomain(pages[i]);
+        }
+        
+        return dataPages;
     }
     
     @RequestMapping(method = GET, value = "/{userId}")
