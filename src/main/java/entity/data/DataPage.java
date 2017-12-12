@@ -11,12 +11,11 @@ public class DataPage
     
     public DataPage () {}
     
-    public DataPage (String title, String content, DataTag[] dataTags, DataAttachment[] dataAttachments, long author)
+    public DataPage (String title, String content, DataTag[] dataTags, long author)
     {
         this.title = title;
         this.content = content;
         this.dataTags = dataTags;
-        this.dataAttachments = dataAttachments;
         this.author = author;
     }
     

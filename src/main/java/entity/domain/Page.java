@@ -1,9 +1,6 @@
 package entity.domain;
 
-import sun.management.ThreadInfoCompositeData;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,7 +8,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Page.findPageById", query = "SELECT p FROM Page AS p WHERE p.id = ?1"),
         @NamedQuery(name = "Page.findPageByTitle", query = "SELECT p FROM Page AS p WHERE p.title LIKE '?1%'"),
-        @NamedQuery(name = "Page.findAllPageByAuthorId", query = "SELECT p FROM Page AS p WHERE p.authorId = ?1"),
+        @NamedQuery(name = "Page.findAllPageByAuthorId", query = "SELECT p FROM Page AS p WHERE p.author = ?1"),
         @NamedQuery(name = "Page.findAll", query = "SELECT p FROM Page AS p")
 })
 public class Page
@@ -21,24 +18,25 @@ public class Page
     private long             id;
     private String           title;
     private String           content;
-    @OneToMany(targetEntity = Tag.class)
-    private List<Tag>        tags;
-    @OneToMany(targetEntity = Attachment.class)
-    private List<Attachment> attachments;
-    private long             authorId;
+    
+    @ManyToMany
+    private List<Tag>         tags;
+    
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name="author_id")
+    private User author;
     
     public Page ()
     {
     }
     
-    public Page (String title, String content, List<Tag> tags, long authorId)
+    public Page (String title, String content, List<Tag> tags, User author)
     {
         this.id = id;
         this.title = title;
         this.content = content;
         this.tags = tags;
-        this.authorId = authorId;
-        this.attachments = new ArrayList<>();
+        this.author = author;
     }
     
     public long getId ()
@@ -71,6 +69,9 @@ public class Page
         this.content = content;
     }
     
+    @JoinTable(name = "tag_page", joinColumns =
+    @JoinColumn(name = "pageId", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "tagId", referencedColumnName="id"))
     public List<Tag> getTags ()
     {
         return tags;
@@ -81,23 +82,13 @@ public class Page
         this.tags = tags;
     }
     
-    public List<Attachment> getAttachments ()
+    public User getAuthor ()
     {
-        return attachments;
+        return author;
     }
     
-    public void setAttachments (List<Attachment> attachments)
+    public void setAuthor (User author)
     {
-        this.attachments = attachments;
-    }
-    
-    public long getAuthorId ()
-    {
-        return authorId;
-    }
-    
-    public void setAuthorId (long authorId)
-    {
-        this.authorId = authorId;
+        this.author = author;
     }
 }

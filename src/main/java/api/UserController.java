@@ -67,7 +67,7 @@ public class UserController extends Controller
     {
         User user = em.find(User.class, userId);
     
-        Page[] pages = em.createNamedQuery("Page.findAllPageByAuthorId", Page.class).setParameter(1, userId).getResultList().toArray(new Page[0]);
+        Page[] pages = em.createNamedQuery("Page.findAllPageByAuthorId", Page.class).setParameter(1, user).getResultList().toArray(new Page[0]);
         
         DataPage[] dataPages = new DataPage[pages.length];
     

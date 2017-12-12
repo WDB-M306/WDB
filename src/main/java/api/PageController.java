@@ -1,6 +1,5 @@
 package api;
 
-import entity.data.DataAttachment;
 import entity.data.DataPage;
 import entity.data.DataTag;
 import entity.domain.Attachment;
@@ -53,11 +52,9 @@ public class PageController extends Controller
         List<DataTag> tags = new ArrayList<>();
         page.getTags().forEach(tag -> tags.add(TagController.dataFromDomain(tag)));
         
-        List<DataAttachment> attachments = new ArrayList<>();
-        page.getAttachments().forEach(attachment -> attachments.add(AttachementController.dataFromDomain(attachment)));
         
-        return new DataPage(page.getTitle(), page.getContent(), tags.toArray(new DataTag[0]), attachments.toArray(new DataAttachment[0]), page
-                .getAuthorId());
+        return new DataPage(page.getTitle(), page.getContent(), tags.toArray(new DataTag[0]), page
+                .getAuthor().getId());
     }
     
     @RequestMapping(method = GET, value = "/{pageId}")
@@ -83,10 +80,10 @@ public class PageController extends Controller
         
         for (long id : newPage.tagIds)
         {
-            tags.add(em.createNamedQuery("Tag.findTagById", Tag.class).setParameter(1, id).getSingleResult());
+            tags.add(em.find(Tag.class, id));
         }
         
-        Page page = new Page(newPage.title, newPage.content, tags, newPage.authorId);
+        Page page = new Page(newPage.title, newPage.content, tags, user);
         em.persist(page);
     }
     

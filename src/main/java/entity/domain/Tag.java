@@ -2,13 +2,14 @@ package entity.domain;
 
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 
 @Entity
 @NamedQueries({@NamedQuery(name = "Tag.findTagById",
         query = "SELECT t FROM Tag AS t WHERE t.id = ?1"), @NamedQuery(name = "Tag.findTagByName",
-        query = "SELECT t FROM Tag AS t WHERE t.name = ?1"), @NamedQuery(name = "Tag.selectAll",
+        query = "SELECT t FROM Tag AS t WHERE t.name = ?1"), @NamedQuery(name = "Tag.findAll",
         query = "SELECT t FROM Tag AS t")})
 public class Tag
 {
@@ -16,6 +17,19 @@ public class Tag
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long   id;
     private String name;
+    
+    public List<Page> getPages ()
+    {
+        return pages;
+    }
+    
+    public void setPages (List<Page> pages)
+    {
+        this.pages = pages;
+    }
+    
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
+    private List<Page> pages;
     
     public Tag () {}
     

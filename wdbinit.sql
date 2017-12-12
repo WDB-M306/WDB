@@ -8,13 +8,11 @@ use wdb;
 -- Tabellenstruktur für Tabelle `DataPage`
 --
 
-CREATE TABLE `Page` (
+CREATE TABLE `page` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255),
   `content` varchar(255),
-  `dataTags` int(11),
-  `attachment` varchar(255),
-  `authorId` int(11)
+  `author_id` int(11)
 );
 
 -- --------------------------------------------------------
@@ -23,10 +21,9 @@ CREATE TABLE `Page` (
 -- Tabellenstruktur für Tabelle `DataTag`
 --
 
-CREATE TABLE `Tag` (
+CREATE TABLE `tag` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `label` varchar(255),
-  `entries` varchar(255)
+  `name` varchar(255)
 );
 
 -- --------------------------------------------------------
@@ -35,13 +32,22 @@ CREATE TABLE `Tag` (
 -- Tabellenstruktur für Tabelle `User`
 --
 
-CREATE TABLE `User` (
-  `id` int(11) NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) UNIQUE,
   `password` varchar(255),
   `active` tinyint(1)
 );
 
+
+
+CREATE TABLE `tag_page` (
+  `tagId` INT(11) NOT NULL,
+  `pageId` INT(11) NOT NULL,
+  PRIMARY KEY (`tagId`, `pageId`),
+  CONSTRAINT `FK_Tag` FOREIGN KEY (`tagId`) REFERENCES `tag` (`id`),
+  CONSTRAINT `FK_Page` FOREIGN KEY (`pageId`) REFERENCES `page` (`id`)
+);
 --
 -- Indizes der exportierten Tabellen
 --
@@ -49,19 +55,9 @@ CREATE TABLE `User` (
 --
 -- Indizes für die Tabelle `DataPage`
 --
-ALTER TABLE `Page`
-  ADD KEY `fk_tags` (`dataTags`),
-  ADD KEY `fk_user` (`authorId`);
+ALTER TABLE `page`
+  ADD KEY `fk_user` (`author_id`);
 
-
---
--- Constraints der exportierten Tabellen
---
-
---
--- Constraints der Tabelle `DataPage`
---
-ALTER TABLE `Page`
-  ADD CONSTRAINT `fk_tags` FOREIGN KEY (`dataTags`) REFERENCES `Tag` (`id`),
-  ADD CONSTRAINT `fk_user` FOREIGN KEY (`authorId`) REFERENCES `User` (`id`);
+ALTER TABLE `page`
+  ADD CONSTRAINT `fk_user` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`);
 COMMIT;

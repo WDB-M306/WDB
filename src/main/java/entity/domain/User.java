@@ -1,6 +1,7 @@
 package entity.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -18,9 +19,9 @@ public class User
     private String  password;
     private boolean active;
     
-    public User ()
-    {
-    }
+    @OneToMany(mappedBy = "author")
+    private List<Page> pages;
+    public User(){}
     
     public User (String username, String password)
     {
