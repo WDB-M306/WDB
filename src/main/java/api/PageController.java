@@ -25,7 +25,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping("/page")
 public class PageController extends Controller
 {
-    
     public PageController (EntityManager em)
     {
         super(em);
@@ -52,8 +51,7 @@ public class PageController extends Controller
         List<DataTag> tags = new ArrayList<>();
         page.getTags().forEach(tag -> tags.add(TagController.dataFromDomain(tag)));
         
-        
-        return new DataPage(page.getTitle(), page.getContent(), tags.toArray(new DataTag[0]), page
+        return new DataPage(page.getId(), page.getTitle(), page.getContent(), tags.toArray(new DataTag[0]), page
                 .getAuthor().getId());
     }
     

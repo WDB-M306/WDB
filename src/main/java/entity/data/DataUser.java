@@ -25,7 +25,7 @@ public class DataUser
         this.active = active;
     }
     
-    private long getId ()
+    public long getId ()
     {
         return id;
     }

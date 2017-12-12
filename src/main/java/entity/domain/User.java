@@ -1,6 +1,7 @@
 package entity.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,6 +19,19 @@ public class User
     private String  username;
     private String  password;
     private boolean active;
+    @Column(columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date last_changed;
+    
+    public Date getLast_changed ()
+    {
+        return last_changed;
+    }
+    
+    public void setLast_changed (Date last_changed)
+    {
+        this.last_changed = last_changed;
+    }
     
     @OneToMany(mappedBy = "author")
     private List<Page> pages;

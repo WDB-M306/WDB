@@ -12,6 +12,11 @@ import sun.rmi.runtime.Log;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.TemporalAmount;
+import java.util.Date;
+
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -43,6 +48,11 @@ public class SessionController extends Controller
         if (user == null)
         {
             throw new Exception("Invalid credentials");
+        }
+        
+        if (!user.isActive() && user.getLast_changed().before(Date.from(Instant.now().minus(Duration.ofDays(14)))))
+        {
+            throw new Exception("Inactive Account. Please create a new one");
         }
         
         if (passwordEncoder.matches(login.getPassword(), user.getPassword()))

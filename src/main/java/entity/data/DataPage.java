@@ -11,8 +11,9 @@ public class DataPage
     
     public DataPage () {}
     
-    public DataPage (String title, String content, DataTag[] dataTags, long author)
+    public DataPage (long id, String title, String content, DataTag[] dataTags, long author)
     {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.dataTags = dataTags;

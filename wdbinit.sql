@@ -36,7 +36,8 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) UNIQUE,
   `password` varchar(255),
-  `active` tinyint(1)
+  `active` tinyint(1),
+  `last_changed` DATETIME on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 

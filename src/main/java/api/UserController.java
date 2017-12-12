@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -92,11 +94,11 @@ public class UserController extends Controller
     
     @RequestMapping(method = POST)
     @Transactional
-    public void createUser (@RequestBody NewUser newUser)
+    public void createUser (@RequestBody NewUser newUser) throws Exception
     {
-        if (newUser == null)
+        if (newUser == null || isEmptyOrWhitespace(newUser.getUsername()) || isEmptyOrWhitespace(newUser.getPassword()))
         {
-            return;
+            throw new Exception("Not valid user (username, password)");
         }
         
         User user = new User(newUser.getUsername(), passwordEncoder.encode(newUser.getPassword()));
@@ -134,7 +136,7 @@ public class UserController extends Controller
         }
     }
     
-    @RequestMapping(method = DELETE, value = "/")
+    @RequestMapping(method = DELETE)
     @Transactional
     public void deleteUser(@RequestBody String password, HttpSession session) throws Exception
     {
@@ -151,13 +153,20 @@ public class UserController extends Controller
             query.setParameter(1, user.getId());
     
             User user1 = ((User) query.getSingleResult());
-            em.remove(user1);
+            user1.setActive(false);
+            user1.setLast_changed(Date.from(Instant.now()));
+            em.merge(user1);
             session.removeAttribute("User");
         }
         else
         {
             throw new Exception("Wrong password");
         }
+    }
+    
+    private boolean isEmptyOrWhitespace (String string)
+    {
+        return string == null || string.trim().isEmpty();
     }
 }
 
