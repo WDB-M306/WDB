@@ -28,7 +28,7 @@ public class Tag
         this.pages = pages;
     }
     
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
+    @ManyToMany(targetEntity = Page.class, mappedBy = "tags")
     private List<Page> pages;
     
     public Tag () {}

@@ -6,7 +6,7 @@ public class DataPage
     private String           title;
     private String           content;
     private DataTag[]        dataTags;
-    private DataAttachment[] dataAttachments;
+    //private DataAttachment[] dataAttachments;
     private long         author;
     
     public DataPage () {}
@@ -58,7 +58,7 @@ public class DataPage
     {
         this.dataTags = dataTags;
     }
-    
+    /*
     public DataAttachment[] getDataAttachments ()
     {
         return dataAttachments;
@@ -68,7 +68,7 @@ public class DataPage
     {
         this.dataAttachments = dataAttachments;
     }
-    
+    */
     public long getAuthor ()
     {
         return author;

@@ -19,7 +19,10 @@ public class Page
     private String           title;
     private String           content;
     
-    @ManyToMany
+    @ManyToMany(targetEntity = Tag.class)
+    @JoinTable(name = "page_tags", joinColumns =
+    @JoinColumn(name = "page_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName="id"))
     private List<Tag>         tags;
     
     @ManyToOne(targetEntity = User.class)
@@ -69,9 +72,7 @@ public class Page
         this.content = content;
     }
     
-    @JoinTable(name = "tag_page", joinColumns =
-    @JoinColumn(name = "pageId", referencedColumnName="id"),
-            inverseJoinColumns = @JoinColumn(name = "tagId", referencedColumnName="id"))
+    
     public List<Tag> getTags ()
     {
         return tags;

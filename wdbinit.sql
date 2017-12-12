@@ -41,12 +41,12 @@ CREATE TABLE `user` (
 
 
 
-CREATE TABLE `tag_page` (
-  `tagId` INT(11) NOT NULL,
-  `pageId` INT(11) NOT NULL,
-  PRIMARY KEY (`tagId`, `pageId`),
-  CONSTRAINT `FK_Tag` FOREIGN KEY (`tagId`) REFERENCES `tag` (`id`),
-  CONSTRAINT `FK_Page` FOREIGN KEY (`pageId`) REFERENCES `page` (`id`)
+CREATE TABLE `page_tags` (
+  `tag_id` INT(11) NOT NULL,
+  `page_id` INT(11) NOT NULL,
+  PRIMARY KEY (`tag_id`, `page_id`),
+  CONSTRAINT `FK_Tag` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`),
+  CONSTRAINT `FK_Page` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`)
 );
 --
 -- Indizes der exportierten Tabellen

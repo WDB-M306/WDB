@@ -21,6 +21,7 @@ public class User
     
     @OneToMany(mappedBy = "author")
     private List<Page> pages;
+    
     public User(){}
     
     public User (String username, String password)
